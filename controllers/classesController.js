@@ -15,6 +15,14 @@ exports.findClassById=async (req,res)=>{
     
     res.json({classes:classes})
 }
+
+exports.findByName=async (req,res)=>{
+    const className = req.query.name || '';
+    const classes = await classesModel.find({name:className}).populate("teacher");
+    
+    res.render('classesTable',{ classes:classes});
+
+}
 exports.addNewClass=async (req,res)=>{
     const subjectName = req.body.subject;
     // const days = (req.body.days).split(',');

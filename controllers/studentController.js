@@ -36,10 +36,17 @@ exports.addNewStudent=async (req,res)=>{
     const phone = req.body.phone;
 
     const class_id = req.body.classes;
+    const classes =[];
+    classes.push(new mongoose.Types.ObjectId(class_id));
     console.log(`${name},${gender},${email},${phone},${class_id}`);
-    const students = await studentModel.create({name,gender,email,phone,classes:new mongoose.Types.ObjectId(class_id)});
+    const students = await studentModel.create({name,
+                                                gender,
+                                                email,
+                                                phone,
+                                                classes
+                                                });
     console.log(students);
-    res.json({students:students})
+    res.redirect('/students');
 }
 exports.updateStudent = async (req,res)=>{
     const id = req.params.id;

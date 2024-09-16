@@ -12,9 +12,10 @@ exports.findAllTeachers=async (req,res)=>{
 }
 
 exports.findByName=async (req,res)=>{
-   
-    const teacherName = req.query.name ||'';
-    console.log(teacherName);
+    const teacherName = req.query.name || '';
+    const teachers = await teacherModel.find({name:teacherName}).populate("class_id");
+    
+    res.render('teacherTable',{ teachers:teachers})
 
 }
 exports.findTeacherById=async (req,res)=>{
@@ -26,7 +27,7 @@ exports.addNewTeacher=async (req,res)=>{
     const name = req.body.name;
     const email = req.body.email;
     const phone = req.body.phone;
-
+    
     const teacher = await teacherModel.create({name:name, email:email, phone:phone});
     
     res.json({teacher:teacher})
