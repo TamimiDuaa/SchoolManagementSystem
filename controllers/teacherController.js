@@ -5,9 +5,10 @@ const app = express();
 app.use(express.json());
 
 exports.findAllTeachers=async (req,res)=>{
-    const teachers = await teacherModel.find();
-    
-    res.json({teachers:teachers});
+    const teachers = await teacherModel.find()
+                                        .populate("class_id");
+    console.log(teachers);
+    res.render('teacherTable',{ teachers})
 }
 
 exports.findByName=async (req,res)=>{
@@ -23,18 +24,20 @@ exports.findTeacherById=async (req,res)=>{
 }
 exports.addNewTeacher=async (req,res)=>{
     const name = req.body.name;
-   
-    const teacher = await teacherModel.create({name:name});
+    const email = req.body.email;
+    const phone = req.body.phone;
+
+    const teacher = await teacherModel.create({name:name, email:email, phone:phone});
     
     res.json({teacher:teacher})
 }
 exports.updateTeacher = async (req,res)=>{
     const id = req.params.id;
-    const {name} = req.body;
+    const {name,email,phone} = req.body;
 
     const teachers = await teacherModel.findByIdAndUpdate(id
         ,{
-           name:name
+           name:name,email:email,phone:phone
         });
 
         res.json({teachers:teachers})
