@@ -457,9 +457,25 @@ table tr td{
     color: #ddd;
 }
 .addNewElements{
-    width:50%;
+    width:50vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: auto;
 
-    
+}
+.addNewElements label{
+    display: flex;
+    justify-content: space-around;
+}
+.addNewElements #submitForm{
+    width:20%;
+    height: 10vh;
+    background-color: blanchedalmond;
+    margin:auto;
+    margin-top:10px;
+    margin-bottom: 10px;
 }
 @media (min-width : 200px) and (max-width : 850px){
     .main-section{

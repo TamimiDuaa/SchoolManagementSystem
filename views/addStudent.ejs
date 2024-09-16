@@ -51,7 +51,7 @@
                 </ul>
             </aside>
             <section class="main-content">
-                <form actions="/students" method="POST" class="addNewElements">
+                <form actions="/students/form" method="POST" class="addNewElements">
                     <label for="studentName">
                         Student Name:
                         <input type="text" name="name" id="studentName">
@@ -64,13 +64,20 @@
                         Student Email:
                         <input type="email" name="email" id="studentEmail">
                     </label>
+                    <label for="studentPhone"></label>
+                        Student Phone:
+                        <input type="text" name="phone" id="studentPhone">
+                    </label>
                     <label for="classes">
                         Classes:
                         <select name="classes" id="classes">
-                            <option id=""></option>
+                            <% classes.forEach(classe =>{%>
+                                <option value="<%= classe._id%>"><%=classe.subject.name%></option>
+
+                            <%})%>
                         </select>
                     </label>
-                    <input type="submit" value="Add New Student">
+                    <input type="submit" value="Add New Student" id="submitForm">
                 </form>
             </section>
             <hr class="divider">

@@ -1,4 +1,6 @@
 const studentModel = require('../models/studentModel');
+const classesModel = require('../models/classesModel');
+const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -7,6 +9,11 @@ exports.findAllStudent=async (req,res)=>{
     const students = await studentModel.find();
     // console.log(typeof students);
     res.render('studentsTable',{ students:students})
+
+}
+exports.renderForm = async (req,res)=>{
+    const classes = await classesModel.find();
+    res.render('addStudent',{ classes:classes})
 
 }
 exports.findByStudentName=async (req,res)=>{
@@ -28,9 +35,10 @@ exports.addNewStudent=async (req,res)=>{
     const email = req.body.email;
     const phone = req.body.phone;
 
-    
-    const students = await studentModel.create({name:name,gender:gender,email:email,phone:phone});
-    
+    const class_id = req.body.classes;
+    console.log(`${name},${gender},${email},${phone},${class_id}`);
+    const students = await studentModel.create({name,gender,email,phone,classes:new mongoose.Types.ObjectId(class_id)});
+    console.log(students);
     res.json({students:students})
 }
 exports.updateStudent = async (req,res)=>{
