@@ -51,53 +51,36 @@
                 </ul>
             </aside>
             <section class="main-content">
-                <section class="table-section">
-                    <section class="search">
-                        <form action="/students/search" method="GET">
-                            <label for="search">
-                                Search:
-                                <input type="text" id="search" name="name" class="Input">
-                                
-                            </label>
-                        </form>
-                        
-                    </section>
-                  
-                    <table class="pagination" data-pagecount="10">
-                            <tr>
-                                
-                                <th>Name</th>
-                                <th>gender</th>
-                                <th>email</th>
-                                <th>phone</th>
-                                <th>Control</th>
-                            </tr>
-                            <% students.forEach(student => { %>
-                                <tr>
-                                   
-                                    <td><a href="/students/<%= student._id  %>"><%=student.name%></a></td>
-                                    <td><%=student.gender%></td>
-                                    <td><%=student.email%></td>
-                                    <td><%=student.phone%></td>
-
-                                    <td class="control-icons">
-                                        <i class='fa-solid fa-plus'></i>
-                                        <i class='fa-solid fa-pen-to-square'></i>
-                                        <i onclick="deleteStudent('<%= student._id  %>')" class="fa-solid fa-trash"></i>
-                                    </td>
-                                </tr>
-                                
-                            <% });%>
-                    </table>           
-                </section>
-                    <hr class="divider">
-                    <aside class="icons">
-                        <a href="addStudent.ejs"><i class="fa-solid fa-plus"></i></a>
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <i class="fa-solid fa-trash"></i>
-                        <i class="fa-solid fa-print"></i>
-                    </aside>          
-                </section>
+                <form actions="/students" method="POST" class="addNewElements">
+                    <label for="studentName">
+                        Student Name:
+                        <input type="text" name="name" id="studentName">
+                    </label>
+                    <label for="studentGender">
+                        Student Gender:
+                        <input type="text" name="gender" id="studentGender">
+                    </label>
+                    <label for="studentEmail">
+                        Student Email:
+                        <input type="email" name="email" id="studentEmail">
+                    </label>
+                    <label for="classes">
+                        Classes:
+                        <select name="classes" id="classes">
+                            <option id=""></option>
+                        </select>
+                    </label>
+                    <input type="submit" value="Add New Student">
+                </form>
+            </section>
+            <hr class="divider">
+            <aside class="icons">
+                <i class="fa-solid fa-plus"></i>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-print"></i>
+                </aside>          
+            </section>
         </main>
        <script>
             let i=0;
@@ -218,10 +201,8 @@
         }
     }
 
-    function createUpdateForm(){
-        let updateStudentDiv = document.createElement('Div');
-
-    }
+    
+    
 
        </script>
 

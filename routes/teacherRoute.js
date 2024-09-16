@@ -4,8 +4,8 @@ const router = express.Router();
 const teacherController = require('../controllers/teacherController');
 
 router.get('/',teacherController.findAllTeachers);
-router.get('/:id',teacherController.findTeacherById);
 router.get('/search',teacherController.findByName);
+router.get('/:id',teacherController.findTeacherById);
 
 router.post('/',teacherController.addNewTeacher);
 router.put('/:id',teacherController.updateTeacher);

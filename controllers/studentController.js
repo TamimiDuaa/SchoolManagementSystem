@@ -9,10 +9,12 @@ exports.findAllStudent=async (req,res)=>{
     res.render('studentsTable',{ students:students})
 
 }
-exports.findByName=async (req,res)=>{
+exports.findByStudentName=async (req,res)=>{
    
-    const studentName = req.query.name ||'';
-    console.log(studentName);
+    const studentName = req.query.name || '';
+    const students = await studentModel.find({name:studentName});
+    
+    res.render('studentsTable',{ students:students})
 
 }
 exports.findStudentById=async (req,res)=>{
@@ -25,6 +27,8 @@ exports.addNewStudent=async (req,res)=>{
     const gender = req.body.gender;
     const email = req.body.email;
     const phone = req.body.phone;
+
+    
     const students = await studentModel.create({name:name,gender:gender,email:email,phone:phone});
     
     res.json({students:students})
