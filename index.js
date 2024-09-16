@@ -9,6 +9,9 @@ const PORT =process.env.PORT || 3000;
 
 const studentRoute = require('./routes/studentRoute');
 const teacherRoute = require('./routes/teacherRoute');
+const classesRoute = require('./routes/classesRoute');
+const gradesRoute = require('./routes/gradesRoute');
+
 
 app.set('view engine', 'ejs');
 
@@ -22,8 +25,11 @@ app.get("/",(req,res)=>{
     res.render('homepage.ejs');
 })
 
-app.use('/student',studentRoute);
+app.use('/students',studentRoute);
 app.use('/teacher',teacherRoute);
+app.use('/classes',classesRoute);
+app.use('/grades',gradesRoute);
+
 
 
 app.listen(PORT, ()=>{

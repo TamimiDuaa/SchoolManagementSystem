@@ -1,34 +1,13 @@
 const mongoose = require('mongoose');
 
 const teacherSchema = new mongoose.Schema({
-    firstName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    subject: {
-      type: String,
-      trim: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      trim: true,
-      lowercase: true,
-    },
-    phone: {
-      type: String,
-      trim: true,
-    },
-    hireDate: {
-      type: Date,
-      default: Date.now,
-    },
+    name: String,
+    email: String,
+    phone:String,
+    classes: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Class'  // Reference to the Class model
+      }
   });
 
 

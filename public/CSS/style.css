@@ -426,9 +426,7 @@ table tr{
     text-align: center;
     border:none;
 }
-table tr:nth-child(2n){
-    background-color: rgb(216, 241, 244);
-}
+
 table tr td{
     padding-top:8px;
     padding-bottom: 3px;
@@ -447,7 +445,7 @@ table tr td{
 }
 .pager-item{
     border-radius: 50%;
-    background-color: rgb(216, 241, 244);
+    background-color: rgb(144, 145, 146);
     height: 30px;
     width:30px;
     text-align: center;
@@ -455,11 +453,10 @@ table tr td{
     cursor: pointer;
 }
 .pager-item:hover{
-    background-color: rgb(186, 237, 243);
+    background-color: rgb(95, 96, 96);
+    color: #ddd;
 }
-.pager-item:active{
-    background-color: rgb(186, 237, 243);
-}
+
 @media (min-width : 200px) and (max-width : 850px){
     .main-section{
         display: flex;
