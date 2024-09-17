@@ -73,7 +73,7 @@
                                 <th>Control</th>
                             </tr>
                             <% students.forEach(student => { %>
-                                <tr>
+                                <tr id = '<%= student._id  %>'>
                                    
                                     <td><a href="/students/<%= student._id  %>"><%=student.name%></a></td>
                                     <td><%=student.gender%></td>
@@ -222,6 +222,170 @@
         let updateStudentDiv = document.createElement('Div');
 
     }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const table = document.querySelector('table');
+
+    // Attach click event listener to each row
+    table.addEventListener('click', function(e) {
+      const row = e.target.closest('tr');  // Find the clicked row
+        // Prevent form input clicks from triggering the row click event
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT'|| e.target.tagName === 'TH' || e.target.closest('th')) {
+        return;
+      }
+      if (!row) return;  // Make sure a row is clicked
+
+      const studentId = row.id;  // Assuming row has data-id with student ID
+      console.log(studentId);
+      const name = row.children[0].textContent;
+      const gender = row.children[1].textContent;
+      const email = row.children[2].textContent;
+      const phone = row.children[3].textContent;
+
+      // Replace the row with a form
+      row.innerHTML = `
+        <td><input type="text" name="name" value="${name}"></td>
+        <td>
+          <input type="text" name="gender" value="${gender}">
+        </td>
+        <td><input type="email" name="email" value="${email}"></td>
+        <td><input type="text" name="phone" value="${phone}"></td>
+        <td><button type="button" onclick="saveRow(this, '${studentId}')">Save</button></td>
+      `;
+    });
+  });
+
+  // Function to save the row and send data to the server
+  function saveRow(button, studentId) {
+    const row = button.closest('tr');
+    
+    
+    // Get the updated values from the inputs
+    const updatedName = row.querySelector('input[name="name"]').value;
+    const updatedGender = row.querySelector('input[name="gender"]').value;
+    const updatedEmail = row.querySelector('input[name="email"]').value;
+    const updatedPhone = row.querySelector('input[name="phone"]').value;
+
+    // Prepare the data to be sent
+    const updatedData = {
+      id: studentId,
+      name: updatedName,
+      gender: updatedGender,
+      email: updatedEmail,
+      phone: updatedPhone,
+    };
+
+    // Send the data to the server via AJAX using fetch
+    fetch(`/students/${studentId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Replace the row content with the updated data
+        row.innerHTML = `
+          <td><a href='/students/${updatedData.id}'>${updatedData.name}</a></td>
+          <td>${updatedData.gender}</td>
+          <td>${updatedData.email}</td>
+          <td>${updatedData.phone}</td>
+          <td class="control-icons">
+                <i class='fa-solid fa-plus'></i>
+                <i class='fa-solid fa-pen-to-square'></i>
+                <i onclick="deleteStudent('${updatedData.id}')" class="fa-solid fa-trash"></i>
+        </td>
+        `;
+        console.log('Student updated successfully');
+      } else {
+        alert('Failed to update student');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error updating student');
+    });
+  }
+    // function updateStudent(studentId){
+    //     // Attach click event listener to each row
+    //         document.querySelector('table').addEventListener('click', function(e) {
+    //         const row = e.target.closest('tr');  // Find the clicked row
+    //         if (!row) return;  // Make sure a row is clicked
+
+    //         // Get the current row's data
+    //         const name = row.children[0].textContent;
+    //         const gender = row.children[1].textContent;
+    //         const email = row.children[2].textContent;
+    //         const phone = row.children[3].textContent;
+
+    //         // Replace the row with a form
+    //         row.innerHTML = `
+    //             <td><input type="text" name="name" value="${name}"></td>
+    //             <td><input type="text" name="name" value="${gender}"></td>
+
+    //             <td><input type="email" name="email" value="${email}"></td>
+    //             <td><input type="text" name="phone" value="${phone}"></td>
+    //             <td><button type="button" onclick="saveRow(this)">Save</button></td>
+    //         `;
+
+    //     })
+            
+    //     function saveRow(button) {
+    //         const row = button.closest('tr');
+            
+    //         // Get the updated values from the inputs
+    //         const updatedName = row.querySelector('input[name="name"]').value;
+    //         const updatedGender = row.querySelector('input[name="gender"]').value;
+    //         const updatedEmail = row.querySelector('input[name="email"]').value;
+    //         const updatedPhone = row.querySelector('input[name="phone"]').value;
+
+    //         // Update the row's content to reflect the new data (in place of the form)
+    //         row.innerHTML = `
+    //         <td>${updatedName}</td>
+    //         <td>${updatedGender}</td>
+    //         <td>${updatedEmail}</td>
+    //         <td>${updatedPhone}</td>
+            
+    //         `;
+    //         const updatedData = {
+    //             id: studentId,
+    //             name: updatedName,
+    //             gender: updatedGender,
+    //             email: updatedEmail,
+    //             phone: updatedPhone,
+    //         };
+    //         fetch(`/students/${studentId}`, {
+    //             method: 'PUT',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(updatedData)                
+    //         })
+    // .then(response => response.json())
+    // .then(data => {
+    //   if (data.success) {
+    //     // Replace the row content with the updated data
+    //     row.innerHTML = `
+    //       <td>${updatedData.name}</td>
+    //       <td>${updatedData.gender}</td>
+    //       <td>${updatedData.email}</td>
+    //       <td>${updatedData.phone}</td>
+    //       <td>${updatedData.classes}</td>
+    //     `;
+    //     console.log('Student updated successfully');
+    //   } else {
+    //     alert('Failed to update student');
+    //   }
+    // })
+    // .catch(error => {
+    //   console.error('Error:', error);
+    //   alert('Error updating student');
+    // });
+        
+    //     }
+    // }
 
        </script>
 

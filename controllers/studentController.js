@@ -57,8 +57,7 @@ exports.updateStudent = async (req,res)=>{
            name:name,gender:gender,email:email,phone:phone
         });
 
-        res.json({students:students})
-}
+res.json({ success: true, student: students });}
 exports.deleteStudent = async (req,res)=>{
     const studentid = req.params.id;
     const students = await studentModel.findByIdAndDelete(studentid)
